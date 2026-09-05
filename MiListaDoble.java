@@ -1,10 +1,14 @@
-public class MiListaDoble {
+public class MiListaDoble implements ListInterface {
+    DoubleNode cabeza;
 
+
+    // 1
     @Override
     public boolean isEmpty() {
         return this.cabeza == null;
     }
 
+    // 2
     @Override
     public int getSize() {
         DoubleNode iterador = this.cabeza;
@@ -16,6 +20,13 @@ public class MiListaDoble {
         return contador;
     }
 
+    // 3
+    public void clear() {
+        this.cabeza = null;
+        return;
+    }
+
+    // 4
     @Override
     public Object getHead() {
         if (this.cabeza == null) {
@@ -24,6 +35,7 @@ public class MiListaDoble {
         return this.cabeza.dato;
     }
 
+    // 5
     @Override
     public Object getTail() {
         if(this.cabeza == null) {
@@ -36,6 +48,7 @@ public class MiListaDoble {
         return iterador.dato;
     }
 
+    // 6
     @Override
     public Object get(DoubleNode node) {
         if (node == null) {
@@ -44,6 +57,7 @@ public class MiListaDoble {
         return node.dato;
     }
 
+    // 7
     @Override
     public DoubleNode search(Object object) {
         DoubleNode actual = this.cabeza;
@@ -56,6 +70,7 @@ public class MiListaDoble {
         return null;
     }
 
+    // 8
     @Override
     public boolean add(Object object) {
         DoubleNode newNode = new DoubleNode(object);
@@ -73,48 +88,80 @@ public class MiListaDoble {
     }
 
 
+    // 9
     @Override
-    public boolean insert(DoubleNode node, Object object);
+    public boolean insert(DoubleNode node, Object object) {
+        if (this.cabeza == null) {
+            return false;
+        }
+
+        DoubleNode actual = this.cabeza;
+        DoubleNode newNode = new DoubleNode(object);
+
+        while (actual != null) {
+            if (actual == node) {
+                newNode.siguiente = actual.siguiente;
+                newNode.anterior = actual;
+
+                if (actual.siguiente != null) {
+                    newNode.siguiente.anterior = newNode;
+                }
+                actual.siguiente = newNode;
+                return true;
+            }
+        actual = actual.siguiente;
+        }
+    return false;
+    }
 
 
+    // 10
     @Override
-    public boolean insert(Object objectRef, Object object);
+    public boolean insert(Object objectRef, Object object) {return false;}
 
 
+    // 11
     @Override
-    public boolean insertHead(Object object);
+    public boolean insertHead(Object object) {return false;}
 
 
+    // 12
     @Override
-    public boolean insertTail(Object object);
+    public boolean insertTail(Object object) {return false;}
 
 
+    // 13
     @Override
-    public boolean set(DoubleNode node, Object object);
+    public boolean set(DoubleNode node, Object object) {return false;}
 
 
+    // 14
     @Override
-    public boolean remove(DoubleNode node);
+    public boolean remove(DoubleNode node) {return false;}
 
 
+    // 15
     @Override
-    public boolean contains(Object object);
+    public boolean contains(Object object) {return false;}
 
 
+    // 16
     @Override
-    public Object[] toArray();
+    public Object[] toArray() {return null;}
 
-
+    // 17
     @Override
-    public Object[] toArray(Object[] object);
+    public Object[] toArray(Object[] object) {return object;}
 
 
+    // 18
     @Override
-    public MiListaDoble subList(DoubleNode from, DoubleNode to);
+    public MiListaDoble subList(DoubleNode from, DoubleNode to) {return null;}
 
 
+    // 19
     @Override
-    public MiListaDoble sortList();
+    public MiListaDoble sortList() {return null;}
 
 
 
