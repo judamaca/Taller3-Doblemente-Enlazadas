@@ -117,27 +117,110 @@ public class MiListaDoble implements ListInterface {
 
     // 10
     @Override
-    public boolean insert(Object objectRef, Object object) {return false;}
+    public boolean insert(Object objectRef, Object object) {
+        if (this.cabeza == null) {
+            return false;
+        }
+        DoubleNode actual = this.cabeza;
+        while (actual != null) {
+            if (actual.dato.equals(objectRef) && actual.dato != null) {
+                DoubleNode newNode = new DoubleNode(object);
+                newNode.anterior = actual;
+                newNode.siguiente = actual.siguiente;
+
+                if (actual.siguiente != null) {
+                    newNode.siguiente.anterior = newNode;
+                }
+                actual.siguiente = newNode;
+                return true;
+            }
+            actual = actual.siguiente;
+        }
+    return true;
+    }
+
 
 
     // 11
     @Override
-    public boolean insertHead(Object object) {return false;}
+    public boolean insertHead(Object object) {
+        DoubleNode nuevaCabeza = new DoubleNode(object);
+
+        if (this.cabeza != null) {
+            cabeza.anterior = nuevaCabeza;
+            nuevaCabeza.siguiente = cabeza;
+        }
+        this.cabeza = nuevaCabeza;
+        return true;
+    }
 
 
     // 12
     @Override
-    public boolean insertTail(Object object) {return false;}
+    public boolean insertTail(Object object) {
+        DoubleNode nuevaCola = new DoubleNode(object);
+
+        if (this.cabeza  != null) {
+            DoubleNode actual = this.cabeza;
+            while (actual.siguiente != null) {
+            actual = actual.siguiente;
+            }
+            actual.siguiente = nuevaCola;
+            nuevaCola.anterior = actual;
+            return true;
+        } else {
+            this.cabeza = nuevaCola;
+            return true;
+        }
+    }
 
 
     // 13
     @Override
-    public boolean set(DoubleNode node, Object object) {return false;}
+    public boolean set(DoubleNode node, Object object) {
+        if (this.cabeza == null) {
+            return false;
+        }
+        DoubleNode actual = this.cabeza;
+        while (actual != null) {
+            if (actual == node) {
+                actual.dato = object;
+                return true;
+            }
+            actual = actual.siguiente;
+        }
+        return false;
+    }
 
 
     // 14
     @Override
-    public boolean remove(DoubleNode node) {return false;}
+    public boolean remove(DoubleNode node) {
+        if (this.cabeza == null || node == null) {
+            return false;
+        }
+        DoubleNode actual = this.cabeza;
+
+        while (actual != null) {
+            if (actual == node) {
+                if (actual == this.cabeza) {
+                this.cabeza = actual.siguiente;
+
+                if (this.cabeza != null) {
+                    this.cabeza.anterior = null;
+                }
+            } else {
+                actual.anterior.siguiente = actual.siguiente;
+                if (actual.siguiente != null) {
+                    actual.siguiente.anterior = actual.anterior;
+                }
+                }
+            return true;
+            }
+        actual = actual.siguiente;
+        }
+        return false;
+    }
 
 
     // 15
@@ -147,11 +230,55 @@ public class MiListaDoble implements ListInterface {
 
     // 16
     @Override
-    public Object[] toArray() {return null;}
+    public Object[] toArray() {
+        if (this.cabeza == null) return new Object[0];
+        DoubleNode iterador = this.cabeza;
+        int contador = 1;
+        while (iterador.siguiente != null) {
+            iterador = iterador.siguiente;
+            contador++;
+        }
+
+        Object[] arreglo = new Object[contador];
+        int i = 0;
+        iterador = this.cabeza;
+
+        while (iterador != null) {
+            arreglo[i] = iterador.dato;
+            i++;
+            iterador = iterador.siguiente;
+        }
+        return arreglo;
+    }
 
     // 17
     @Override
-    public Object[] toArray(Object[] object) {return object;}
+    public Object[] toArray(Object[] object) {
+        int contador = 0;
+        DoubleNode iterador = this.cabeza;
+        while (iterador != null) {
+            contador++;
+            iterador = iterador.siguiente;
+        }
+
+        Object[] destino = object;
+        if (destino.length < contador) {
+            destino = new Object[contador];
+        }
+
+        int i = 0;
+        iterador = this.cabeza;
+        while (iterador != null) {
+            destino[i] = iterador.dato;
+            i++;
+            iterador = iterador.siguiente;
+        }
+
+        if (destino.length > contador) {
+            destino[contador] = null;
+        }
+        return destino;
+    }
 
 
     // 18

@@ -41,5 +41,13 @@ void main() {
     Object datoExtraido = lista.get(nodoEncontrado);
     System.out.println("   get(nodoEncontrado) [Debe ser 20]: " + datoExtraido);
 
+    lista.add(10);
+    lista.add(20);
+    lista.add(30);
+    lista.insert(lista.cabeza.siguiente, 50);
+    lista.insert(50, 55);
+    lista.insertHead(01);
+    lista.insertTail(999);
+    System.out.println("   Lista actual: " + Arrays.toString(lista.toArray()));
     System.out.println("\n====== PRUEBAS FINALIZADAS ======");
 }
