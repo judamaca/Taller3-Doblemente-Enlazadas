@@ -53,7 +53,7 @@ public class MiListaDoble implements ListInterface {
     // 6
     @Override
     public Object get(DoubleNode node) {
-        if (node == null) {
+        if (node == null || this.cabeza == null) {
             return null;
         }
         return node.dato;
