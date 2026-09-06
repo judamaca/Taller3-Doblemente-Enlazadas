@@ -48,6 +48,11 @@ void main() {
     lista.insert(50, 55);
     lista.insertHead(01);
     lista.insertTail(999);
+    lista.set(lista.cabeza.siguiente, 67);
+    lista.remove(cabeza);
+
+
+
     System.out.println("   Lista actual: " + Arrays.toString(lista.toArray()));
     System.out.println("\n====== PRUEBAS FINALIZADAS ======");
 }

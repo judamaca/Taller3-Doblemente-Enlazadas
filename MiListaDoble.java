@@ -225,7 +225,20 @@ public class MiListaDoble implements ListInterface {
 
     // 15
     @Override
-    public boolean contains(Object object) {return false;}
+    public boolean contains(Object object) {
+        if (this.cabeza == null) {
+            return false;
+        }
+
+        DoubleNode actual = this.cabeza;
+        while (actual != null) {
+            if (actual.dato != null && actual.dato.equals(object)) {
+                return true;
+            }
+            actual = actual.siguiente;
+        }
+    return false;
+    }
 
 
     // 16
@@ -283,12 +296,53 @@ public class MiListaDoble implements ListInterface {
 
     // 18
     @Override
-    public MiListaDoble subList(DoubleNode from, DoubleNode to) {return null;}
+    public MiListaDoble subList(DoubleNode from, DoubleNode to) {
+        MiListaDoble nuevaLista = new MiListaDoble();
+        if (this.cabeza == null || from == null || to == null) {
+            return nuevaLista;
+        }
+
+        DoubleNode actual = this.cabeza;
+        while (actual != null && actual!= from) {
+            actual = actual.siguiente;
+        }
+
+        if (actual == null) {
+            return nuevaLista;
+        }
+
+        boolean finAlcanzado = false;
+
+        while (actual != null) {
+            nuevaLista.insertTail(actual.dato);
+            if (actual != to) {
+                finAlcanzado = true;
+                break;
+            }
+            actual = actual.siguiente;
+        }
+        if (!finAlcanzado) {
+            return new MiListaDoble();
+        }
+        return nuevaLista;
+    }
 
 
     // 19
     @Override
-    public MiListaDoble sortList() {return null;}
+    public MiListaDoble sortList() {
+        Object[] arreglo = this.toArray();
+
+        Arrays.sort(arreglo);
+        DoubleNode actual = this.cabeza;
+        int i = 0;
+        while (actual != null) {
+            actual.dato = arreglo[i];
+            i++;
+            actual = actual.siguiente;
+        }
+        return this;
+    }
 
 
 
