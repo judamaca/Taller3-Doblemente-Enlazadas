@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class MiListaDoble implements ListInterface {
     DoubleNode cabeza;
 
@@ -38,7 +40,7 @@ public class MiListaDoble implements ListInterface {
     // 5
     @Override
     public Object getTail() {
-        if(this.cabeza == null) {
+        if (this.cabeza == null) {
             return null;
         }
         DoubleNode iterador = this.cabeza;
@@ -109,9 +111,9 @@ public class MiListaDoble implements ListInterface {
                 actual.siguiente = newNode;
                 return true;
             }
-        actual = actual.siguiente;
+            actual = actual.siguiente;
         }
-    return false;
+        return false;
     }
 
 
@@ -123,7 +125,7 @@ public class MiListaDoble implements ListInterface {
         }
         DoubleNode actual = this.cabeza;
         while (actual != null) {
-            if (actual.dato.equals(objectRef) && actual.dato != null) {
+            if (actual.dato != null && actual.dato.equals(objectRef)) {
                 DoubleNode newNode = new DoubleNode(object);
                 newNode.anterior = actual;
                 newNode.siguiente = actual.siguiente;
@@ -136,9 +138,8 @@ public class MiListaDoble implements ListInterface {
             }
             actual = actual.siguiente;
         }
-    return true;
+        return false;
     }
-
 
 
     // 11
@@ -160,10 +161,10 @@ public class MiListaDoble implements ListInterface {
     public boolean insertTail(Object object) {
         DoubleNode nuevaCola = new DoubleNode(object);
 
-        if (this.cabeza  != null) {
+        if (this.cabeza != null) {
             DoubleNode actual = this.cabeza;
             while (actual.siguiente != null) {
-            actual = actual.siguiente;
+                actual = actual.siguiente;
             }
             actual.siguiente = nuevaCola;
             nuevaCola.anterior = actual;
@@ -204,20 +205,20 @@ public class MiListaDoble implements ListInterface {
         while (actual != null) {
             if (actual == node) {
                 if (actual == this.cabeza) {
-                this.cabeza = actual.siguiente;
+                    this.cabeza = actual.siguiente;
 
-                if (this.cabeza != null) {
-                    this.cabeza.anterior = null;
+                    if (this.cabeza != null) {
+                        this.cabeza.anterior = null;
+                    }
+                } else {
+                    actual.anterior.siguiente = actual.siguiente;
+                    if (actual.siguiente != null) {
+                        actual.siguiente.anterior = actual.anterior;
+                    }
                 }
-            } else {
-                actual.anterior.siguiente = actual.siguiente;
-                if (actual.siguiente != null) {
-                    actual.siguiente.anterior = actual.anterior;
-                }
-                }
-            return true;
+                return true;
             }
-        actual = actual.siguiente;
+            actual = actual.siguiente;
         }
         return false;
     }
@@ -237,7 +238,7 @@ public class MiListaDoble implements ListInterface {
             }
             actual = actual.siguiente;
         }
-    return false;
+        return false;
     }
 
 
@@ -303,7 +304,7 @@ public class MiListaDoble implements ListInterface {
         }
 
         DoubleNode actual = this.cabeza;
-        while (actual != null && actual!= from) {
+        while (actual != null && actual != from) {
             actual = actual.siguiente;
         }
 
@@ -315,7 +316,7 @@ public class MiListaDoble implements ListInterface {
 
         while (actual != null) {
             nuevaLista.insertTail(actual.dato);
-            if (actual != to) {
+            if (actual == to) {
                 finAlcanzado = true;
                 break;
             }
@@ -343,7 +344,4 @@ public class MiListaDoble implements ListInterface {
         }
         return this;
     }
-
-
-
 }

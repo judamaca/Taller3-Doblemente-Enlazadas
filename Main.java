@@ -1,58 +1,50 @@
 void main() {
-    System.out.println("====== INICIANDO PRUEBAS DE LISTA DOBLEMENTE ENLAZADA ======\n");
-
-    // Asumiendo que la clase donde pusiste los métodos se llama MiListaDoble
     MiListaDoble lista = new MiListaDoble();
 
-    // 1. isEmpty() y getSize() en lista vacía
-    System.out.println("1. Pruebas iniciales:");
-    System.out.println("   ¿Lista vacía? (isEmpty): " + lista.isEmpty());
-    System.out.println("   Tamaño (getSize): " + lista.getSize());
-    System.out.println("   getHead(): " + lista.getHead());
-    System.out.println("   getTail(): " + lista.getTail());
+    System.out.println("1. isEmpty inicial: " + lista.isEmpty());
 
-    // 2. add(Object)
-    System.out.println("\n2. Agregando elementos (10, 20, 30)...");
-    lista.add(10);
-    lista.add(20);
-    lista.add(30);
+    // --- POBLAR LA LISTA (add, insertHead, insertTail) ---
+    lista.add("C");                 // [C]
+    lista.insertHead("A");          // [A, C]
+    lista.insertTail("F");          // [A, C, F]
 
-    System.out.println("   ¿Lista vacía ahora?: " + lista.isEmpty());
-    System.out.println("   Nuevo tamaño: " + lista.getSize());
+    // --- INSERCIONES EN MEDIO ---
+    DoubleNode nodoC = lista.search("C"); // 7. search
+    lista.insert(nodoC, "D");             // 9. insert por Nodo -> [A, C, D, F]
+    lista.insert("D", "E");               // 10. insert por Valor -> [A, C, D, E, F]
+    lista.insertHead("B");                // [B, A, C, D, E, F]
 
-    // 3. getHead() y getTail() con datos
-    System.out.println("\n3. Comprobando extremos de la lista:");
-    System.out.println("   getHead() [Debe ser 10]: " + lista.getHead());
-    System.out.println("   getTail() [Debe ser 30]: " + lista.getTail());
+    System.out.println("\nLista poblada: " + Arrays.toString(lista.toArray()));
 
-    // 4. search(Object)
-    System.out.println("\n4. Buscando el valor '20' con search():");
-    // Ojo: tu firma dice que search retorna un DoubleNode
-    DoubleNode nodoEncontrado = lista.search(20);
+    // --- CONSULTAS ---
+    System.out.println("2. getSize: " + lista.getSize());
+    System.out.println("4. getHead: " + lista.getHead());
+    System.out.println("5. getTail: " + lista.getTail());
+    System.out.println("6. get(nodoC): " + lista.get(nodoC));
+    System.out.println("15. contains('E'): " + lista.contains("E"));
+    System.out.println("15. contains('Z'): " + lista.contains("Z"));
 
-    if (nodoEncontrado != null) {
-        System.out.println("   ¡Nodo encontrado! El dato en el nodo es: " + nodoEncontrado.dato);
-    } else {
-        System.out.println("   No se encontró el nodo.");
-    }
+    // --- MODIFICACIONES (set y remove) ---
+    lista.set(nodoC, "X"); // 13. set (Cambiamos 'C' por 'X')
+    System.out.println("\n13. Después de set ('C' -> 'X'): " + Arrays.toString(lista.toArray()));
 
-    // 5. get(DoubleNode)
-    System.out.println("\n5. Extrayendo el dato del nodo encontrado usando get():");
-    Object datoExtraido = lista.get(nodoEncontrado);
-    System.out.println("   get(nodoEncontrado) [Debe ser 20]: " + datoExtraido);
+    lista.remove(lista.search("X")); // 14. remove
+    System.out.println("14. Después de remove('X'): " + Arrays.toString(lista.toArray()));
 
-    lista.add(10);
-    lista.add(20);
-    lista.add(30);
-    lista.insert(lista.cabeza.siguiente, 50);
-    lista.insert(50, 55);
-    lista.insertHead(01);
-    lista.insertTail(999);
-    lista.set(lista.cabeza.siguiente, 67);
-    lista.remove(cabeza);
+    // --- SUBLIST Y ORDENAMIENTO ---
+    DoubleNode from = lista.search("D");
+    DoubleNode to = lista.search("F");
+    MiListaDoble sub = lista.subList(from, to); // 18. subList
+    System.out.println("\n18. subList ('D' a 'F'): " + Arrays.toString(sub.toArray()));
 
+    lista.sortList(); // 19. sortList (Ordena alfabéticamente)
+    System.out.println("19. Después de sortList: " + Arrays.toString(lista.toArray()));
 
+    // --- ARREGLOS Y LIMPIEZA ---
+    Object[] destino = new Object[10];
+    Object[] resultado = lista.toArray(destino); // 17. toArray con parámetro
+    System.out.println("\n17. toArray(Object[]): " + Arrays.toString(resultado));
 
-    System.out.println("   Lista actual: " + Arrays.toString(lista.toArray()));
-    System.out.println("\n====== PRUEBAS FINALIZADAS ======");
+    lista.clear(); // 3. clear
+    System.out.println("3. isEmpty final (tras clear): " + lista.isEmpty());
 }
